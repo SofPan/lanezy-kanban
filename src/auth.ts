@@ -6,6 +6,6 @@ import Resend from "next-auth/providers/resend"
 export const { handlers, auth, signIn, signOut } = NextAuth({
     adapter: PrismaAdapter(prisma),
     providers: [Resend({
-  from: "onboarding@resend.dev"
-})],
+                from: "onboarding@resend.dev"
+              })],
 })
