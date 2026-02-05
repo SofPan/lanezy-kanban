@@ -9,7 +9,7 @@ export function SignIn() {
       }}
     >
       <input type="text" name="email" placeholder="Email" />
-      <button type="submit">Signin with Resend</button>
+      <button type="submit">Sign In</button>
     </form>
   )
 }
