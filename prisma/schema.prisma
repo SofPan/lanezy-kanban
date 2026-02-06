@@ -29,6 +29,7 @@ model Board {
   owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId   String
   columns   Column[]
+  theme     Theme?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -39,11 +40,96 @@ model Column {
   title     String   @default("To Do")
   board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
   boardId   String
+  cards     Card[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-// === TODO: CARDS ===
+// === CARDS ===
+model Card {
+  id          String           @id @default(uuid())
+  title       String
+  description String?
+  position    Int //where it is located in the column
+  startDate   DateTime?
+  dueDate     DateTime?
+  priority    Int // Scale from 0-5, to be enforced at tRPC layer
+  color       String?
+  tags        CardTag[]
+  checklists  Checklist[]
+  attachments LinkAttachment[]
+  owner       Column           @relation(fields: [columnId], references: [id], onDelete: Cascade)
+  columnId    String
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+// === TAGS ===
+model Tag {
+  id        String    @id @default(uuid())
+  name      String
+  color     String
+  cards     CardTag[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+// === CARDS AND TAGS JOIN TABLE ===
+model CardTag {
+  card       Card     @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  cardId     String
+  tag        Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  tagId      String
+  assignedAt DateTime @default(now())
+
+  @@id([cardId, tagId])
+}
+
+// === CHECKLISTS ===
+model Checklist {
+  id        String          @id @default(uuid())
+  title     String
+  card      Card            @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  cardId    String
+  items     ChecklistItem[]
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+}
+
+// === CHECKLIST ITEMS ===
+model ChecklistItem {
+  id          String    @id @default(uuid())
+  content     String
+  completed   Boolean   @default(false)
+  position    Int
+  checklist   Checklist @relation(fields: [checklistId], references: [id], onDelete: Cascade)
+  checklistId String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// === LINK ATTACHMENTS ===
+model LinkAttachment {
+  id        String   @id @default(uuid())
+  title     String?
+  url       String
+  card      Card     @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  cardId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// === THEMES ===
+model Theme {
+  id             String  @id @default(uuid())
+  name           String
+  primaryColor   String
+  secondaryColor String
+  accentColor    String
+  font           String?
+  board          Board   @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  boardId        String  @unique
+}
 
 // === AUTHJS BOILERPLATE ===
 model Account {
