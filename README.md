@@ -1,36 +1,141 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lanezy - Customizable Kanban Board
 
-## Getting Started
+A modern, customizable Kanban board application built with Next.js and tRPC. Designed for job hunting, coursework management, and project organization.
 
-First, run the development server:
+## 🚧 Project Status
 
+**Currently in development** - Week 1 complete (Authentication & Foundation)
+
+This is a portfolio project demonstrating full-stack development with modern web technologies.
+
+## ✨ Planned Features
+
+- **Customizable Kanban boards** with drag-and-drop functionality
+- **Three pre-built templates**: Job Hunt, Course Work, Project Management
+- **Rich card customization**: 
+  - Start/due dates
+  - Priority levels
+  - Tags and checklists
+  - Subtasks
+  - Link attachments
+  - Notes
+- **Color theming** with 5 preset themes per board
+- **User authentication** via magic links (passwordless email login)
+- **Board limits**: 2 boards per user (unlimited for admin)
+- **Guided onboarding** with tutorial for new users
+
+## 🛠️ Tech Stack
+
+### Frontend
+- **Next.js 16** (App Router with Turbopack)
+- **React 19**
+- **TypeScript**
+- **Tailwind CSS**
+- **tRPC** (type-safe API layer)
+- **TanStack Query** (data fetching & caching)
+
+### Backend
+- **tRPC Server** (end-to-end type safety)
+- **Auth.js v5** (NextAuth) with magic link authentication
+- **Prisma 7** (ORM with PostgreSQL adapter)
+- **PostgreSQL** (database)
+- **Resend** (transactional emails)
+
+### Deployment
+- **Vercel** (hosting & CI/CD)
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 20+
+- PostgreSQL installed and running locally
+- A Resend account (free tier) for magic link emails
+
+### Installation
+
+1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/SofPan/lanezy-kanban.git
+cd lanezy-kanban
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env` file in the root directory:
+```env
+DATABASE_URL="postgresql://username:password@localhost:5432/lanezy"
+AUTH_SECRET="your-auth-secret-here"
+RESEND_API_KEY="your-resend-api-key"
+```
 
-## Learn More
+Generate `AUTH_SECRET` with:
+```bash
+openssl rand -base64 32
+```
 
-To learn more about Next.js, take a look at the following resources:
+4. Set up the database
+```bash
+npx prisma migrate dev
+npx prisma generate
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. Run the development server
+```bash
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Deploy on Vercel
+## 📋 Development Roadmap
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [x] **Week 1**: Foundation & Authentication
+  - Project setup with Next.js, TypeScript, tRPC
+  - Prisma + PostgreSQL configuration
+  - Auth.js magic link authentication
+  - Basic layout (header + sidebar navigation)
+  - Vercel deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [ ] **Week 2**: Data Layer & Board Basics
+  - Expand Prisma schema (cards, tags, checklists, themes)
+  - Build tRPC board CRUD routes
+  - Implement 2-board limit with admin override
+  - Basic board creation UI
+
+- [ ] **Week 3**: Kanban Core Experience
+  - Drag-and-drop functionality
+  - Column and card rendering
+  - Card creation and movement between columns
+
+- [ ] **Week 4**: Card Depth & Customization
+  - Card detail view with all fields
+  - Dates, priority, tags, checklists, links
+  - Full CRUD for card elements
+
+- [ ] **Week 5**: Templates, Theming & Polish
+  - Three board templates
+  - Color theming system (5 presets)
+  - User onboarding tutorial
+
+- [ ] **Week 6**: Testing, Refinement & Deployment
+  - End-to-end testing
+  - Bug fixes and edge cases
+  - UI polish
+  - Production deployment
+
+## 👤 Author
+
+**Sofia Panchaud**
+- GitHub: [@SofPan](https://github.com/SofPan)
+
+## 📝 License
+
+This project is open source and available under the MIT License.
+
+---
+
+**Note**: This is a learning project and portfolio piece. It demonstrates full-stack development practices, type-safe APIs, modern authentication patterns, and deployment workflows.
