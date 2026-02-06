@@ -8,4 +8,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     providers: [Resend({
                 from: "onboarding@resend.dev"
               })],
+    callbacks: {
+      async redirect({url, baseUrl}) {
+        return `${baseUrl}/`
+      }
+    }
 })

@@ -11,14 +11,15 @@ datasource db {
 
 // === USERS ===
 model User {
-  id        String    @id @default(uuid())
-  email     String    @unique
-  name      String?
-  isAdmin   Boolean   @default(false)
-  createdAt DateTime  @default(now())
-  boards    Board[]
-  accounts  Account[]
-  sessions  Session[]
+  id            String    @id @default(uuid())
+  email         String    @unique
+  emailVerified DateTime?
+  name          String?
+  isAdmin       Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  boards        Board[]
+  accounts      Account[]
+  sessions      Session[]
 }
 
 // === BOARDS ===
