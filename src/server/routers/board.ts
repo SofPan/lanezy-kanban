@@ -26,12 +26,17 @@ export const boardRouter = router({
   getBoards: protectedProcedure.query(async ({ctx}) => {
       const user = ctx.user;
       const boards = await prisma.board.findMany({where: {"ownerId": user?.id}});
-      console.log("all user boards", boards);
+      // console.log("all user boards", boards);
       return boards;
     }),
-  getBoardById: publicProcedure.query(async({input}) => {
-    const boardId = input?.boardId;
-    const board = await prisma.board.findFirstOrThrow({where: {"id" : boardId}});
+  getBoardById: publicProcedure.
+  input(z.object({
+    id: z.string()
+  }))
+  .query(async(opts) => {
+    console.log("getBoardByID input", opts);
+    const boardId = opts.input?.id;
+    const board = await prisma.board.findUnique({where: {"id" : boardId}});
     console.log("fetched board", board);
     return board;
   }),
