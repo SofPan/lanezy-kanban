@@ -1,3 +1,5 @@
+import BoardList from "../Board/BoardList";
+
 const NavSide = () => {
   return(
     <div className="h-screen px-8 py-4">
@@ -9,6 +11,7 @@ const NavSide = () => {
           <li className="px-1 py-2"><a href="#">Placeholder URL</a></li>
           <li className="px-1 py-2"><a href="#">Placeholder URL</a></li>
         </ul>
+        <BoardList />
       </nav>
     </div>
   )

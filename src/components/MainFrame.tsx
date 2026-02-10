@@ -1,13 +1,14 @@
 'use client';
 import {useSession} from 'next-auth/react';
 import TestButton from './TestButton';
+import ViewBoard from './Board/Board';
 
 const MainFrame = () => {
   const {data: session} = useSession();
 
   return(
     <div className="shadow-[inset_2px_2px_4px_rgba(179,179,179,0.2)] px-12 py-10">
-      {session?.user?.email? <TestButton />: <p>Please sign in</p>}
+      {session?.user?.email? <ViewBoard />: <p>Please sign in</p>}
     </div>
   )
 }
